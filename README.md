@@ -91,8 +91,6 @@ docker pull wyh3210277395/sehuatang-crawler:latest
 
 # 2. 创建docker-compose.yml
 cat > docker-compose.yml << 'EOF'
-version: '3.8'
-
 services:
   sehuatang-app:
     image: wyh3210277395/sehuatang-crawler:latest
@@ -101,20 +99,38 @@ services:
     ports:
       - "8000:8000"
     environment:
+      # 数据库配置
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - DATABASE_NAME=sehuatang_db
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=sehuatang123
+      
+      # 应用配置
       - APP_HOST=0.0.0.0
       - APP_PORT=8000
       - APP_RELOAD=false
       - DEBUG=false
+      
+      # 代理配置 - 支持多种格式
+      # 可以通过环境变量覆盖，例如：
+      # docker-compose up -e HTTP_PROXY=http://your-proxy:port
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - http_proxy=${http_proxy:-}
+      - https_proxy=${https_proxy:-}
+      - NO_PROXY=${NO_PROXY:-localhost,127.0.0.1,postgres,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12}
+      
     volumes:
+      # 数据持久化
       - ./data:/app/data
       - ./logs:/app/logs
+      
     depends_on:
       - postgres
+      
+    networks:
+      - sehuatang-network
 
   postgres:
     image: postgres:15-alpine
@@ -129,9 +145,15 @@ services:
       - LC_ALL=C.UTF-8
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sehuatang-network
 
 volumes:
   postgres_data:
+
+networks:
+  sehuatang-network:
+    driver: bridge
 EOF
 
 # 3. 启动服务
