@@ -3,7 +3,7 @@
 一个专为影视爱好者设计的磁力链接爬取、管理和推送工具。支持可视化番号库管理，提供搜索筛选和批量磁力链接复制功能，支持推送磁力链接到 qBittorrent 等下载器，以及 115 网盘离线下载。
 
 ## 快速开始
-
+ -使用介绍:https://oceanic-pyroraptor-661.notion.site/271519fcd7af809fb4a4d98ea045f5c7?source=copy_link
 ### 系统要求
 
 - Docker 20.10+
