@@ -1,4 +1,4 @@
-# SEHUATANG 爬虫系统
+# SEHUATANG 爬虫系统           ![Docker Pulls](https://img.shields.io/docker/pulls/wyh3210277395/sehuatang-crawler.svg)
 
 一个专为影视爱好者设计的磁力链接爬取、管理和推送工具。支持可视化番号库管理，提供搜索筛选和批量磁力链接复制功能，支持推送磁力链接到 qBittorrent 等下载器，以及 115 网盘离线下载。
 
